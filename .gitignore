@@ -1,0 +1,7 @@
+bin/
+obj/
+.vs/
+*.apk
+*.user
+*.lock.json
+*.bak
