@@ -1,0 +1,1 @@
+MainPackage=C:\jcgit\jcRTSPV\src\jcRTSPV\jcRTSPV\bin\x64\Release\jcRTSPV_1.0.0.0_x64.appx

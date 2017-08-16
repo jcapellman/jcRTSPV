@@ -5,15 +5,31 @@
     xmlns:local="using:jcRTSPV"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewModels="using:jcRTSPV.ViewModels"
-    Foreground="White"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d">
 
-    <Page.DataContext>
-        <viewModels:MainViewModel />
-    </Page.DataContext>
+    <Page.Resources>
+        <DataTemplate x:Key="DefaultTemplate" x:DataType="local:MenuItem">
+            <Grid Width="240" Height="48">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="48" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <SymbolIcon Grid.Column="0" Symbol="{x:Bind Icon, Mode=OneWay}" Foreground="White" />
+                <TextBlock Grid.Column="1" Text="{x:Bind Name, Mode=OneWay}" FontSize="16" VerticalAlignment="Center" Foreground="White" />
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
 
-    <Grid Background="Black">
-        <MediaElement x:Name="meFeed" AutoPlay="True" IsFullWindow="True" />
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <controls:HamburgerMenu x:Name="hamburgerMenuControl"
+                                PaneBackground="Black"
+                                Foreground="White"
+                                ItemTemplate="{StaticResource DefaultTemplate}"
+                                ItemClick="OnMenuItemClick"
+                                OptionsItemTemplate="{StaticResource DefaultTemplate}"
+                                OptionsItemClick="OnMenuItemClick">
+            <Frame x:Name="contentFrame"/>
+        </controls:HamburgerMenu>
     </Grid>
 </Page>

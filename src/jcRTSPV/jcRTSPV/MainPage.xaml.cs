@@ -1,47 +1,60 @@
-﻿using Windows.Foundation.Collections;
-using Windows.Media.Core;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
 using Windows.UI.Xaml.Controls;
-
-using FFmpegInterop;
-
-using jcRTSPV.ViewModels;
 
 namespace jcRTSPV
 {
     public sealed partial class MainPage : Page
     {
-
-        private FFmpegInteropMSS _fFmpegMss;
-        private MediaStreamSource _feedSource;
-
-        private MainViewModel ViewModel => (MainViewModel) DataContext;
-
         public MainPage()
         {
-            InitializeComponent();
+            this.InitializeComponent();
 
-            DataContext = new MainViewModel();
+            hamburgerMenuControl.ItemsSource = MenuItem.GetMainItems();
+            hamburgerMenuControl.OptionsItemsSource = MenuItem.GetOptionsItems();
 
-            ViewModel.LoadFeeds();
-
-            foreach (var feed in ViewModel.Feeds)
-            {
-                LoadData(feed);
-            }
+            selectMenuItem(MenuItem.GetMainItems().FirstOrDefault());
         }
-        
-        private void LoadData(string url)
+
+        private void OnMenuItemClick(object sender, ItemClickEventArgs e)
         {
-            var options = new PropertySet();
-           
-            _fFmpegMss = FFmpegInteropMSS.CreateFFmpegInteropMSSFromUri(url, false, true, options);
+            var menuItem = e.ClickedItem as MenuItem;
 
-            _feedSource = _fFmpegMss?.GetMediaStreamSource();
+            selectMenuItem(menuItem);
+        }
 
-            if (_feedSource != null)
+        private void selectMenuItem(MenuItem menuItem)
+        {
+            contentFrame.Navigate(menuItem.PageType);
+        }
+    }
+
+    public class MenuItem
+    {
+        public Symbol Icon { get; set; }
+        public string Name { get; set; }
+        public Type PageType { get; set; }
+
+        public static List<MenuItem> GetMainItems()
+        {
+            var items = new List<MenuItem>
             {
-                meFeed.SetMediaStreamSource(_feedSource);
-            }
+                new MenuItem() {Icon = Symbol.Camera, Name = "Live Feed", PageType = typeof(Views.MainPage)}
+            };
+
+            return items;
+        }
+
+        public static List<MenuItem> GetOptionsItems()
+        {
+            var items = new List<MenuItem>
+            {
+                new MenuItem() {Icon = Symbol.Setting, Name = "Settings", PageType = typeof(Views.MainPage)}
+            };
+
+            return items;
         }
     }
 }
