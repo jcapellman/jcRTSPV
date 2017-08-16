@@ -1,6 +1,7 @@
 ﻿using Windows.Foundation.Collections;
 using Windows.Media.Core;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 
 using FFmpegInterop;
 
@@ -40,6 +41,19 @@ namespace jcRTSPV.Views
             if (_feedSource != null)
             {
                 meFeed.SetMediaStreamSource(_feedSource);
+            }
+        }
+
+        private void symbolMute_OnTapped(object sender, TappedRoutedEventArgs e)
+        {
+            meFeed.IsMuted = !meFeed.IsMuted;
+
+            if (meFeed.IsMuted)
+            {
+                tbIcon.Text = "\uE198";
+            } else
+            {
+                tbIcon.Text = "\uE15D";
             }
         }
     }
