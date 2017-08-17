@@ -51,7 +51,7 @@ namespace jcRTSPV
         {
             var items = new List<MenuItem>
             {
-                new MenuItem() {Icon = Symbol.Setting, Name = "Settings", PageType = typeof(Views.MainPage)}
+                new MenuItem() {Icon = Symbol.Setting, Name = "Settings", PageType = typeof(Views.SettingsPage)}
             };
 
             return items;

@@ -21,9 +21,9 @@
         </DataTemplate>
     </Page.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="#2e2e2e">
         <controls:HamburgerMenu x:Name="hamburgerMenuControl"
-                                PaneBackground="Black"
+                                PaneBackground="#0e0e0e"
                                 Foreground="White"
                                 ItemTemplate="{StaticResource DefaultTemplate}"
                                 ItemClick="OnMenuItemClick"
