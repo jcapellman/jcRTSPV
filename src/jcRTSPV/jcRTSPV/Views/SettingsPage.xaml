@@ -27,7 +27,7 @@
     
     <Page.BottomAppBar>
         <CommandBar IsOpen="True" RequestedTheme="Dark">
-            <AppBarButton Icon="Save" />
+            <AppBarButton Icon="Save" Click="btnSave_OnClick" />
         </CommandBar>
     </Page.BottomAppBar>
 </Page>
