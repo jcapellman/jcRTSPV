@@ -28,6 +28,8 @@ namespace jcRTSPV
         private void selectMenuItem(MenuItem menuItem)
         {
             contentFrame.Navigate(menuItem.PageType);
+
+            hamburgerMenuControl.IsPaneOpen = false;
         }
     }
 
