@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-
-using jcRTSPV.Objects;
-
-using Microsoft.Toolkit.Uwp;
-
-using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace jcRTSPV.ViewModels
 {
@@ -20,24 +14,22 @@ namespace jcRTSPV.ViewModels
             set { _feeds = value; OnPropertyChanged(); }
         }
 
-        public async void LoadFeeds()
+        public async Task<bool> LoadFeeds()
         {
             var feeds = new List<string>();
 
-            var storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+            var settings = await SettingManager.LoadSettingsAsync();
 
-            if (!await storageFolder.FileExistsAsync(Common.Constants.FILENAME_SETTINGS))
+            if (settings == null)
             {
-                return;
+                Feeds = feeds;
+
+                return false;
             }
 
-            var settingsFile = await storageFolder.GetFileAsync(Common.Constants.FILENAME_SETTINGS);
+            Feeds = settings.CameraFeeds;
 
-            var str = await Windows.Storage.FileIO.ReadTextAsync(settingsFile);
-            
-            var settingsItem = JsonConvert.DeserializeObject<SettingsFileItem>(str);
-
-            Feeds = settingsItem.CameraFeeds;
+            return true;
         }
     }
 }
