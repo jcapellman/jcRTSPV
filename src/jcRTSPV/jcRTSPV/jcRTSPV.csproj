@@ -105,6 +105,8 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Managers\BaseManager.cs" />
+    <Compile Include="Managers\SettingsManager.cs" />
     <Compile Include="Objects\SettingsFileItem.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
