@@ -13,6 +13,32 @@ namespace jcRTSPV.ViewModels
 {
     public class SettingsViewModel : BaseViewModel
     {
+        private string _formCameraFeedURL;
+
+        public string FormCameraFeedURL
+        {
+            get => _formCameraFeedURL;
+            set
+            {
+                _formCameraFeedURL = value;
+                OnPropertyChanged();
+                FormValid = !string.IsNullOrWhiteSpace(value) && value.Length > 0;
+            }
+        }
+        
+        private bool _formValid;
+
+        public bool FormValid
+        {
+            get => _formValid;
+
+            set
+            {
+                _formValid = value;
+                OnPropertyChanged();
+            }
+        }
+
         private List<string> _cameraFeeds;
 
         public List<string> CameraFeeds
@@ -36,9 +62,18 @@ namespace jcRTSPV.ViewModels
 
             var str = await Windows.Storage.FileIO.ReadTextAsync(settingsFile);
 
-            var settingsItem = (SettingsFileItem)JsonConvert.DeserializeObject(str);
+            var settingsItem = JsonConvert.DeserializeObject<SettingsFileItem>(str);
 
             CameraFeeds = settingsItem.CameraFeeds;
+
+            FormValid = false;
+        }
+
+        public void AddFeed()
+        {
+            CameraFeeds.Add(FormCameraFeedURL);
+
+            FormCameraFeedURL = string.Empty;
         }
 
         public async void WriteSettings()

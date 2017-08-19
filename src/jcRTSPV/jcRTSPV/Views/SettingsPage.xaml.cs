@@ -22,5 +22,25 @@ namespace jcRTSPV.Views
         {
             ViewModel.WriteSettings();
         }
+
+        private void btnCancel_OnClick(object sender, RoutedEventArgs e)
+        {
+            pNewForm.IsOpen = false;
+        }
+
+        private void btnAdd_OnClick(object sender, RoutedEventArgs e)
+        {
+            ViewModel.AddFeed();
+        }
+
+        private void btnOpenPopup_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (pNewForm.IsOpen)
+            {
+                return;
+            }
+
+            pNewForm.IsOpen = true;
+        }
     }
 }
