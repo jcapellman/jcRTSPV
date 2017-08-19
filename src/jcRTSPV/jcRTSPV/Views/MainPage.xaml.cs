@@ -7,6 +7,8 @@ using FFmpegInterop;
 
 using jcRTSPV.ViewModels;
 
+using Windows.UI.Xaml.Navigation;
+
 namespace jcRTSPV.Views
 {
     public sealed partial class MainPage : Page
@@ -20,16 +22,19 @@ namespace jcRTSPV.Views
         {
             InitializeComponent();
 
-            DataContext = new MainViewModel();
+            DataContext = new MainViewModel();            
+        }
 
-            ViewModel.LoadFeeds();
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        {
+            await ViewModel.LoadFeeds();
 
             foreach (var feed in ViewModel.Feeds)
             {
                 LoadData(feed);
             }
         }
-        
+
         private void LoadData(string url)
         {
             var options = new PropertySet();
