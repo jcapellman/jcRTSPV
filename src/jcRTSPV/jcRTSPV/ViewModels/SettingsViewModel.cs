@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-using Windows.Storage;
-
-using jcRTSPV.Objects;
-
-using Microsoft.Toolkit.Uwp;
-
-using Newtonsoft.Json;
+﻿using System.Collections.Generic;
 
 namespace jcRTSPV.ViewModels
 {
@@ -51,21 +42,13 @@ namespace jcRTSPV.ViewModels
         {
             CameraFeeds = new List<string>();
 
-            var storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+            var settings = await SettingManager.LoadSettingsAsync();
 
-            if (!await storageFolder.FileExistsAsync(Common.Constants.FILENAME_SETTINGS))
+            if (settings != null)
             {
-                return;
+                CameraFeeds = settings.CameraFeeds;
             }
-
-            var settingsFile = await storageFolder.GetFileAsync(Common.Constants.FILENAME_SETTINGS);
-
-            var str = await Windows.Storage.FileIO.ReadTextAsync(settingsFile);
-
-            var settingsItem = JsonConvert.DeserializeObject<SettingsFileItem>(str);
-
-            CameraFeeds = settingsItem.CameraFeeds;
-
+            
             FormValid = false;
         }
 
@@ -76,18 +59,9 @@ namespace jcRTSPV.ViewModels
             FormCameraFeedURL = string.Empty;
         }
 
-        public async void WriteSettings()
+        public void WriteSettings()
         {
-            var storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
-            
-            var settingsFile = await storageFolder.CreateFileAsync(Common.Constants.FILENAME_SETTINGS, CreationCollisionOption.ReplaceExisting);
-
-            var settingsItem = new SettingsFileItem
-            {
-                CameraFeeds = CameraFeeds
-            };
-
-            await FileIO.WriteTextAsync(settingsFile, JsonConvert.SerializeObject(settingsItem));
+            SettingManager.WriteSettings(CameraFeeds);
         }
     }
 }
