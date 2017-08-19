@@ -5,3 +5,5 @@ obj/
 *.user
 *.lock.json
 *.bak
+*.DotSettings
+AppPackages/
