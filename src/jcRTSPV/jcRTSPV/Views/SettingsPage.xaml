@@ -6,6 +6,7 @@
     Foreground="White"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:x1="using:System"
     mc:Ignorable="d">
 
     <Grid Background="#2e2e2e">
@@ -17,7 +18,7 @@
 
         <TextBlock Text="settings" Grid.Row="0" Style="{StaticResource HeaderTextBlockStyle}" Foreground="White" Margin="10,0,0,10" />
 
-        <ListView Grid.Row="1" ItemsSource="{Binding CameraFeeds}">
+        <ListView x:Name="lvCameraFeeds" SelectionChanged="lvCameraFeeds_SelectionChanged" Grid.Row="1" IsItemClickEnabled="False" SelectionMode="Multiple" ItemsSource="{Binding CameraFeeds}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding}" Style="{StaticResource TitleTextBlockStyle}" Foreground="White" />
@@ -56,6 +57,7 @@
 
         <CommandBar Grid.Row="2" IsOpen="True" RequestedTheme="Dark">
             <AppBarButton Icon="Add" Label="Add" Click="btnOpenPopup_OnClick" />
+            <AppBarButton Icon="Delete" IsEnabled="{Binding EnableDelete, Mode=TwoWay}" Label="Delete" Click="btnDelete_Click" />
             <AppBarButton Icon="Save" Label="Save" Click="btnSave_OnClick" />
         </CommandBar>
     </Grid>

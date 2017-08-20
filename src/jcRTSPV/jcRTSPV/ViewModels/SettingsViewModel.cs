@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace jcRTSPV.ViewModels
 {
@@ -30,9 +32,22 @@ namespace jcRTSPV.ViewModels
             }
         }
 
-        private List<string> _cameraFeeds;
+        private bool _enableDelete;
 
-        public List<string> CameraFeeds
+        public bool EnableDelete
+        {
+            get => _enableDelete;
+
+            set
+            {
+                _enableDelete = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ObservableCollection<string> _cameraFeeds;
+
+        public ObservableCollection<string> CameraFeeds
         {
             get => _cameraFeeds;
             set { _cameraFeeds = value; OnPropertyChanged(); }
@@ -40,16 +55,24 @@ namespace jcRTSPV.ViewModels
 
         public async void LoadSettings()
         {
-            CameraFeeds = new List<string>();
+            CameraFeeds = new ObservableCollection<string>();
 
             var settings = await SettingManager.LoadSettingsAsync();
 
             if (settings != null)
             {
-                CameraFeeds = settings.CameraFeeds;
+                CameraFeeds = new ObservableCollection<string>(settings.CameraFeeds);
             }
             
             FormValid = false;
+        }
+
+        internal void RemoveSelectedFeeds(List<string> list)
+        {
+            foreach (var item in list)
+            {
+                CameraFeeds.Remove(item);
+            }
         }
 
         public void AddFeed()
@@ -61,7 +84,7 @@ namespace jcRTSPV.ViewModels
 
         public void WriteSettings()
         {
-            SettingManager.WriteSettings(CameraFeeds);
+            SettingManager.WriteSettings(CameraFeeds.ToList());
         }
     }
 }

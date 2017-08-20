@@ -1,4 +1,7 @@
-﻿using Windows.UI.Xaml;
+﻿using System.Collections.Generic;
+using System.Linq;
+
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 using jcRTSPV.ViewModels;
@@ -41,6 +44,16 @@ namespace jcRTSPV.Views
             }
 
             pNewForm.IsOpen = true;
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.RemoveSelectedFeeds(lvCameraFeeds.SelectedItems.Cast<string>().ToList());
+        }
+
+        private void lvCameraFeeds_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ViewModel.EnableDelete = lvCameraFeeds.SelectedItems.Any();
         }
     }
 }
