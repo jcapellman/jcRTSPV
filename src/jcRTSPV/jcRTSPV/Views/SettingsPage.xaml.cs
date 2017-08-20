@@ -34,6 +34,8 @@ namespace jcRTSPV.Views
         private void btnAdd_OnClick(object sender, RoutedEventArgs e)
         {
             ViewModel.AddFeed();
+
+            pNewForm.IsOpen = false;
         }
 
         private void btnOpenPopup_OnClick(object sender, RoutedEventArgs e)
