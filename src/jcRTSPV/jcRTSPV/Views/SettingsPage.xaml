@@ -12,6 +12,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <TextBlock Text="settings" Grid.Row="0" Style="{StaticResource HeaderTextBlockStyle}" Foreground="White" Margin="10,0,0,10" />
@@ -52,12 +53,10 @@
                 </Grid>
             </Grid>
         </Popup>
-    </Grid>
-    
-    <Page.BottomAppBar>
-        <CommandBar IsOpen="True" RequestedTheme="Dark">
+
+        <CommandBar Grid.Row="2" IsOpen="True" RequestedTheme="Dark">
             <AppBarButton Icon="Add" Label="Add" Click="btnOpenPopup_OnClick" />
             <AppBarButton Icon="Save" Label="Save" Click="btnSave_OnClick" />
         </CommandBar>
-    </Page.BottomAppBar>
+    </Grid>
 </Page>
