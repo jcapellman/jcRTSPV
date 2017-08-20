@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -26,7 +26,7 @@ namespace jcRTSPV.Views
         {
             ViewModel.WriteSettings();
 
-            await new MessageDialog("Settings Saved").ShowAsync();
+            await new MessageDialog(Common.Constants.MSG_SETTINGS_SAVED).ShowAsync();
         }
 
         private void btnCancel_OnClick(object sender, RoutedEventArgs e)
@@ -40,7 +40,7 @@ namespace jcRTSPV.Views
 
             if (!result)
             {
-                await new MessageDialog("Feed isn't valid").ShowAsync();
+                await new MessageDialog(Common.Constants.MSG_SETTINGS_INVALID_URL).ShowAsync();
 
                 return;
             }
@@ -64,7 +64,7 @@ namespace jcRTSPV.Views
 
             ViewModel.RemoveSelectedFeeds(lvCameraFeeds.SelectedItems.Cast<string>().ToList());
 
-            var md = new MessageDialog($"{count} feed(s) removed");
+            var md = new MessageDialog($"{count} {Common.Constants.MSG_SETTINGS_INVALID_URL}");
 
             await md.ShowAsync();
         }
