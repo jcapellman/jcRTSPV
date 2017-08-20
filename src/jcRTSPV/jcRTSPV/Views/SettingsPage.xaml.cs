@@ -34,9 +34,16 @@ namespace jcRTSPV.Views
             pNewForm.IsOpen = false;
         }
 
-        private void btnAdd_OnClick(object sender, RoutedEventArgs e)
+        private async void btnAdd_OnClick(object sender, RoutedEventArgs e)
         {
-            ViewModel.AddFeed();
+            var result = ViewModel.AddFeed();
+
+            if (!result)
+            {
+                await new MessageDialog("Feed isn't valid").ShowAsync();
+
+                return;
+            }
 
             pNewForm.IsOpen = false;
         }

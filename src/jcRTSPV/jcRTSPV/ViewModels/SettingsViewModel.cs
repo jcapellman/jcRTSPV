@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using FFmpegInterop;
 
 namespace jcRTSPV.ViewModels
 {
@@ -75,11 +76,20 @@ namespace jcRTSPV.ViewModels
             }
         }
 
-        public void AddFeed()
+        public bool AddFeed()
         {
+            var feed = FFmpegInteropMSS.CreateFFmpegInteropMSSFromUri(FormCameraFeedURL, false, true);
+
+            if (feed == null)
+            {
+                return false;
+            }
+
             CameraFeeds.Add(FormCameraFeedURL);
 
             FormCameraFeedURL = string.Empty;
+
+            return true;
         }
 
         public void WriteSettings()
