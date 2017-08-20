@@ -1,13 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+
+using jcRTSPV.Controls;
 
 namespace jcRTSPV.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
-        private List<string> _feeds;
+        private ObservableCollection<FeedControl> _feeds;
 
-        public List<string> Feeds
+        public ObservableCollection<FeedControl> Feeds
         {
             get => _feeds;
 
@@ -16,19 +18,25 @@ namespace jcRTSPV.ViewModels
 
         public async Task<bool> LoadFeeds()
         {
-            var feeds = new List<string>();
-
             var settings = await SettingManager.LoadSettingsAsync();
 
             if (settings == null)
             {
-                Feeds = feeds;
+                Feeds = new ObservableCollection<FeedControl>();
 
                 return false;
             }
 
-            Feeds = settings.CameraFeeds;
+            Feeds = new ObservableCollection<FeedControl>();
 
+            foreach (var url in settings.CameraFeeds)
+            {
+                var feedControl = new FeedControl();
+                feedControl.LoadData(url);
+
+                Feeds.Add(feedControl);
+            }
+            
             return true;
         }
     }
