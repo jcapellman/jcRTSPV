@@ -1,28 +1,41 @@
-﻿using System;
+﻿using Windows.Foundation.Collections;
 using Windows.Media.Core;
-using Windows.Media.Streaming.Adaptive;
-
 using Windows.UI.Xaml.Controls;
-using YunFan.Gallery.FFmpegInterop;
+using Windows.UI.Xaml.Input;
+
+using FFmpegInterop;
 
 namespace jcRTSPV.Controls
 {
     public sealed partial class FeedControl : UserControl
     {
+        private FFmpegInteropMSS _fFmpegMss;
+        private MediaStreamSource _feedSource;
+        
         public FeedControl()
         {
             InitializeComponent();
-
-            LoadData("rtsp://192.168.2.82:7447/5987abd6aa8cffef92ee3d7c_0");
         }
-        
-        private void LoadData(string url)
+
+        public void LoadData(string url)
         {
-            var feed = FFmpegInteropMSS.CreateFFmpegInteropMSSFromUri(url, false, true);
+            var options = new PropertySet();
 
-            MediaStreamSource mss = feed.GetMediaStreamSource();
+            _fFmpegMss = FFmpegInteropMSS.CreateFFmpegInteropMSSFromUri(url, false, true, options);
 
-            meFeed.SetMediaStreamSource(mss);
+            _feedSource = _fFmpegMss?.GetMediaStreamSource();
+
+            if (_feedSource != null)
+            {
+                meFeed.SetMediaStreamSource(_feedSource);
+            }
+        }
+
+        private void symbolMute_OnTapped(object sender, TappedRoutedEventArgs e)
+        {
+            meFeed.IsMuted = !meFeed.IsMuted;
+
+            tbIcon.Text = meFeed.IsMuted ? "\uE198" : "\uE15D";
         }
     }
 }
