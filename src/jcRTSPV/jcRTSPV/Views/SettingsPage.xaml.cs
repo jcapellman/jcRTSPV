@@ -27,11 +27,16 @@ namespace jcRTSPV.Views
             ShowMessageBox(Common.Constants.MSG_SETTINGS_SAVED);
         }
 
-        private void btnCancel_OnClick(object sender, RoutedEventArgs e)
+        private void btnCancelAdd_OnClick(object sender, RoutedEventArgs e)
         {
             pNewForm.IsOpen = false;
         }
 
+        private void btnCancelEdit_OnClick(object sender, RoutedEventArgs e)
+        {
+            pEditForm.IsOpen = false;
+        }
+        
         private void btnAdd_OnClick(object sender, RoutedEventArgs e)
         {
             var result = ViewModel.AddFeed();
@@ -54,6 +59,16 @@ namespace jcRTSPV.Views
             }
 
             pNewForm.IsOpen = true;
+        }
+
+        private void btnOpenEditPopup_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (pEditForm.IsOpen)
+            {
+                return;
+            }
+
+            pEditForm.IsOpen = true;
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
