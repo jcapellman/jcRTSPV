@@ -36,7 +36,21 @@ namespace jcRTSPV.Views
         {
             pEditForm.IsOpen = false;
         }
-        
+
+        private void btnEditSave_OnClick(object sender, RoutedEventArgs e)
+        {
+            var result = ViewModel.CommitEdit();
+
+            if (!result)
+            {
+                ShowMessageBox(Common.Constants.MSG_SETTINGS_INVALID_URL);
+
+                return;
+            }
+
+            pEditForm.IsOpen = false;
+        }
+
         private void btnAdd_OnClick(object sender, RoutedEventArgs e)
         {
             var result = ViewModel.AddFeed();
@@ -68,6 +82,9 @@ namespace jcRTSPV.Views
                 return;
             }
 
+            ViewModel.OriginalCameraFeedURL = lvCameraFeeds.SelectedItems.Cast<string>().FirstOrDefault();
+            ViewModel.EditFormCameraFeedURL = lvCameraFeeds.SelectedItems.Cast<string>().FirstOrDefault();
+
             pEditForm.IsOpen = true;
         }
 
@@ -83,6 +100,7 @@ namespace jcRTSPV.Views
         private void lvCameraFeeds_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ViewModel.EnableDelete = lvCameraFeeds.SelectedItems.Any();
+            ViewModel.EnableEdit = lvCameraFeeds.SelectedItems.Any();
         }
     }
 }

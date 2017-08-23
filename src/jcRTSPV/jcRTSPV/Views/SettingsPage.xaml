@@ -6,8 +6,13 @@
     Foreground="White"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="using:jcRTSPV.ViewModels"
     mc:Ignorable="d">
 
+    <Page.DataContext>
+        <viewModels:SettingsViewModel />
+    </Page.DataContext>
+    
     <Grid Background="#2e2e2e">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -69,7 +74,7 @@
 
                 <TextBlock Grid.Row="0" Text="edit camera feed" Style="{StaticResource TitleTextBlockStyle}" Margin="10,10,0,10" Foreground="White" />
 
-                <TextBox Grid.Row="1" Text="{Binding SelectedFormCameraFeedURL, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,10,10,10" PlaceholderText="enter your camera feed url here" />
+                <TextBox Grid.Row="1" Text="{Binding EditFormCameraFeedURL, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,10,10,10" PlaceholderText="enter your camera feed url here" />
 
                 <Grid Grid.Row="2" Margin="10,10,10,10">
                     <Grid.ColumnDefinitions>
@@ -79,14 +84,14 @@
 
                     <Button Grid.Column="0" x:Name="btnCancelEdit" Foreground="White" Content="Cancel" Click="btnCancelEdit_OnClick" />
 
-                    <Button Grid.Column="1" HorizontalAlignment="Right" Foreground="White" IsEnabled="{Binding EditFormValid, Mode=TwoWay}" x:Name="btnSave" Content="Save" Click="btnSave_OnClick" />
+                    <Button Grid.Column="1" HorizontalAlignment="Right" Foreground="White" IsEnabled="{Binding EditFormValid, Mode=TwoWay}" x:Name="btnSave" Content="Save" Click="btnEditSave_OnClick" />
                 </Grid>
             </Grid>
         </Popup>
         
         <CommandBar Grid.Row="2" IsOpen="True" RequestedTheme="Dark">
             <AppBarButton Icon="Add" Label="Add" Click="btnOpenPopup_OnClick" />
-            <AppBarButton Icon="Edit" Label="Edit" Click="btnOpenEditPopup_OnClick" />
+            <AppBarButton Icon="Edit" IsEnabled="{Binding EnableEdit, Mode=TwoWay}" Label="Edit" Click="btnOpenEditPopup_OnClick" />
             <AppBarButton Icon="Delete" IsEnabled="{Binding EnableDelete, Mode=TwoWay}" Label="Delete" Click="btnDelete_Click" />
             <AppBarButton Icon="Save" Label="Save" Click="btnSave_OnClick" />
         </CommandBar>
