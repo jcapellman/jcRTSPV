@@ -35,6 +35,8 @@ namespace jcRTSPV.Views
         private void btnCancelEdit_OnClick(object sender, RoutedEventArgs e)
         {
             pEditForm.IsOpen = false;
+            
+            lvCameraFeeds.SelectedItems.Clear();
         }
 
         private void btnEditSave_OnClick(object sender, RoutedEventArgs e)
@@ -49,6 +51,8 @@ namespace jcRTSPV.Views
             }
 
             pEditForm.IsOpen = false;
+
+            lvCameraFeeds.SelectedItems.Clear();
         }
 
         private void btnAdd_OnClick(object sender, RoutedEventArgs e)
@@ -63,6 +67,8 @@ namespace jcRTSPV.Views
             }
 
             pNewForm.IsOpen = false;
+            
+            lvCameraFeeds.SelectedItems.Clear();
         }
 
         private void btnOpenPopup_OnClick(object sender, RoutedEventArgs e)
@@ -94,7 +100,9 @@ namespace jcRTSPV.Views
 
             ViewModel.RemoveSelectedFeeds(lvCameraFeeds.SelectedItems.Cast<string>().ToList());
 
-            ShowMessageBox($"{count} {Common.Constants.MSG_SETTINGS_INVALID_URL}");            
+            ShowMessageBox($"{count} {Common.Constants.MSG_SETTINGS_INVALID_URL}");
+            
+            lvCameraFeeds.SelectedItems.Clear();
         }
 
         private void lvCameraFeeds_SelectionChanged(object sender, SelectionChangedEventArgs e)
